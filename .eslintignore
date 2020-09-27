@@ -1,0 +1,8 @@
+node_modules/
+.vercel/
+.idea/
+.idea_modules/
+.git/
+package-lock.json
+coverage/
+.expo/

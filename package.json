@@ -1,0 +1,59 @@
+{
+  "name": "evbeacon-native",
+  "private": true,
+  "version": "0.1.0",
+  "description": "React Native app for EVBeacon",
+  "author": "Josh McFarlin <jmcfarlin6@gatech.edu> (https://mcfarl.in/)",
+  "license": "GPL-3.0",
+  "keywords": [
+    "evbeacon",
+    "ev"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evbeacon/evbeacon-native.git"
+  },
+  "bugs": {
+    "url": "https://github.com/evbeacon/evbeacon-native/issues"
+  },
+  "homepage": "https://github.com/evbeacon/evbeacon-native#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format"
+    }
+  },
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json}\"",
+    "lint": "eslint --fix --ext ts --ext tsx --ext js --ext jsx ."
+  },
+  "dependencies": {
+    "expo": "~39.0.2",
+    "expo-status-bar": "~1.0.2",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.2.tar.gz",
+    "react-native-web": "~0.13.12"
+  },
+  "devDependencies": {
+    "@types/react": "~16.9.35",
+    "@types/react-dom": "~16.9.8",
+    "@types/react-native": "~0.63.2",
+    "@typescript-eslint/eslint-plugin": "^4.2.0",
+    "@typescript-eslint/parser": "^4.2.0",
+    "eslint": "^7.10.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-config-typescript": "^3.0.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.2",
+    "eslint-plugin-react-native": "^3.9.1",
+    "husky": "^4.3.0",
+    "prettier": "^2.1.2",
+    "react-native-web": "~0.13.7",
+    "typescript": "~3.9.5"
+  }
+}
