@@ -7,11 +7,11 @@ import {
 import { apiPostRequest } from "../utils/requests";
 
 export const login = async (
-  body: LoginActionParams
+  params: LoginActionParams
 ): Promise<LoginActionResponse> =>
-  apiPostRequest<LoginActionParams, LoginActionResponse>("/login", body);
+  apiPostRequest<LoginActionParams, LoginActionResponse>("/login", params);
 
 export const signUp = (
-  body: SignUpActionParams
+  params: SignUpActionParams
 ): Promise<SignUpActionResponse> =>
-  apiPostRequest<SignUpActionParams, SignUpActionResponse>("/signup", body);
+  apiPostRequest<SignUpActionParams, SignUpActionResponse>("/signup", params);
