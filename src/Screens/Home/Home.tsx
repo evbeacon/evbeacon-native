@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, View } from "react-native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
-import { MainStackParamList } from "../../types/Navigation";
+import { MainStackParamList } from "../../types/navigation";
 
 interface PropTypes {
   navigation: DrawerNavigationProp<MainStackParamList, "Home">;

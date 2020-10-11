@@ -1,19 +1,21 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import * as SecureStore from "expo-secure-store";
-import { AuthState, SetTokenAction } from "./types";
+import { AuthState, SetTokenAction, SetUserAction } from "./types";
 
 const initialState: AuthState = {
   token: null,
   loggedIn: false,
+  user: null,
 };
 
-const setToken = createAsyncThunk("auth/setToken", async (token: string) => {
-  await SecureStore.setItemAsync("token", token);
+const setToken = createAsyncThunk(
+  "auth/setToken",
+  async (payload: SetTokenAction) => {
+    await SecureStore.setItemAsync("token", payload.token!);
 
-  return {
-    token,
-  };
-});
+    return payload as SetTokenAction;
+  }
+);
 
 const removeToken = createAsyncThunk("auth/removeToken", async () => {
   await SecureStore.deleteItemAsync("token");
@@ -22,10 +24,16 @@ const removeToken = createAsyncThunk("auth/removeToken", async () => {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
-  extraReducers: {
-    [setToken.fulfilled]: (state, action: PayloadAction<SetTokenAction>) => {
-      const { token } = action.payload;
+  reducers: {
+    setUser(state, action: PayloadAction<SetUserAction>) {
+      const { user } = action.payload;
+
+      state.user = user;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(setToken.pending, (state, action) => {
+      const { token } = (action.payload as unknown) as SetTokenAction;
 
       if (token != null && token.length > 0) {
         state.token = token;
@@ -34,15 +42,15 @@ const authSlice = createSlice({
         state.token = null;
         state.loggedIn = false;
       }
-    },
-    [removeToken.fulfilled]: (state) => {
+    });
+    builder.addCase(removeToken.pending, (state) => {
       state.token = null;
+      state.user = null;
       state.loggedIn = false;
-    },
+    });
   },
 });
 
-//export const { } = authSlice.actions;
-
 export default authSlice.reducer;
+export const { setUser } = authSlice.actions;
 export { setToken, removeToken };

@@ -1,16 +1,20 @@
 import React from "react";
 import {
-  View,
   Text,
   TextInput,
   TouchableHighlight,
   TouchableWithoutFeedback,
   StyleSheet,
+  Alert,
 } from "react-native";
 import { useDispatch } from "react-redux";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { setToken } from "../../redux/auth/authSlice";
-import { AuthStackParamList } from "../../types/Navigation";
+import { setToken, setUser } from "../../redux/auth/authSlice";
+import { AuthStackParamList } from "../../types/navigation";
+import { login } from "../../actions/auth";
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 interface PropTypes {
   navigation: StackNavigationProp<AuthStackParamList, "Login">;
@@ -22,20 +26,53 @@ const LoginScreen: React.FC<PropTypes> = ({ navigation }) => {
   const [password, setPassword] = React.useState<string>("");
 
   const handleLogin = async () => {
-    await dispatch(setToken("hello"));
+    if (password.length < 8 || !emailRegex.test(email)) {
+      Alert.alert("Error", "Please fill out all fields!", [{ text: "Ok" }], {
+        cancelable: false,
+      });
+      return;
+    }
+
+    try {
+      const response = await login({
+        email,
+        password,
+      });
+
+      dispatch(
+        setUser({
+          user: response.user,
+        })
+      );
+      dispatch(
+        setToken({
+          token: response.token,
+        })
+      );
+    } catch (error) {
+      Alert.alert("Error", error.message, [{ text: "Ok" }], {
+        cancelable: false,
+      });
+    }
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView
+      style={styles.root}
+      contentContainerStyle={styles.container}
+    >
       <TextInput
         style={[styles.input, styles.spacer]}
         placeholder="Email"
+        textContentType="emailAddress"
         onChangeText={(text) => setEmail(text)}
         value={email}
       />
       <TextInput
         style={[styles.input, styles.spacer]}
         placeholder="Password"
+        textContentType="password"
+        secureTextEntry
         onChangeText={(text) => setPassword(text)}
         value={password}
       />
@@ -51,15 +88,18 @@ const LoginScreen: React.FC<PropTypes> = ({ navigation }) => {
       >
         <Text style={styles.actionText}>Sign Up</Text>
       </TouchableWithoutFeedback>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    backgroundColor: "#eaeaea",
+  },
   container: {
     flex: 1,
     padding: 24,
-    backgroundColor: "#eaeaea",
     alignItems: "center",
   },
   input: {

@@ -1,21 +1,15 @@
 import React from "react";
-import {
-  Button,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  View,
-} from "react-native";
+import { StyleSheet, Text, TouchableHighlight, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { removeToken } from "../../redux/auth/authSlice";
-import { MainStackParamList } from "../../types/Navigation";
+import { MainStackParamList } from "../../types/navigation";
 
 interface PropTypes {
   navigation: DrawerNavigationProp<MainStackParamList, "Profile">;
 }
 
-const ProfileScreen: React.FC<PropTypes> = ({ navigation }) => {
+const ProfileScreen: React.FC<PropTypes> = () => {
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
