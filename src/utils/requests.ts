@@ -1,8 +1,9 @@
-import { API_URL } from "./constants";
+import { API_URL } from "../constants/api";
 
 export async function apiGetRequest<ParamsType, ResponseType>(
   apiRoute: string,
-  params?: ParamsType
+  params?: ParamsType,
+  token?: string
 ): Promise<ResponseType> {
   let fullUrl = apiRoute;
 
@@ -14,7 +15,10 @@ export async function apiGetRequest<ParamsType, ResponseType>(
     });
   }
 
-  const response = await fetch(`${API_URL}${fullUrl}`, {
+  const withToken =
+    token == null ? "" : `${apiRoute === fullUrl ? "?" : "&"}token=${token}`;
+
+  const response = await fetch(`${API_URL}${fullUrl}${withToken}`, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -34,16 +38,20 @@ export async function apiGetRequest<ParamsType, ResponseType>(
 
 export async function apiPostRequest<BodyType, ResponseType>(
   apiRoute: string,
-  body: BodyType
+  body: BodyType,
+  token?: string
 ): Promise<ResponseType> {
-  const response = await fetch(`${API_URL}${apiRoute}`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+  const response = await fetch(
+    `${API_URL}${apiRoute}${token != null && `?token=${token}`}`,
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  );
 
   const json = await response.json();
 
@@ -58,16 +66,20 @@ export async function apiPostRequest<BodyType, ResponseType>(
 
 export async function apiPatchRequest<BodyType, ResponseType>(
   apiRoute: string,
-  body: BodyType
+  body: BodyType,
+  token?: string
 ): Promise<ResponseType> {
-  const response = await fetch(`${API_URL}${apiRoute}`, {
-    method: "PATCH",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+  const response = await fetch(
+    `${API_URL}${apiRoute}${token != null && `?token=${token}`}`,
+    {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  );
 
   const json = await response.json();
 
@@ -82,16 +94,20 @@ export async function apiPatchRequest<BodyType, ResponseType>(
 
 export async function apiPutRequest<BodyType>(
   apiRoute: string,
-  body: BodyType
+  body: BodyType,
+  token?: string
 ): Promise<void> {
-  const response = await fetch(`${API_URL}${apiRoute}`, {
-    method: "PUT",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+  const response = await fetch(
+    `${API_URL}${apiRoute}${token != null && `?token=${token}`}`,
+    {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  );
 
   if (!response.ok) {
     throw new Error(response.statusText);
@@ -100,16 +116,20 @@ export async function apiPutRequest<BodyType>(
 
 export async function apiDeleteRequest<BodyType, ResponseType>(
   apiRoute: string,
-  body: BodyType
+  body: BodyType,
+  token?: string
 ): Promise<ResponseType> {
-  const response = await fetch(`${API_URL}${apiRoute}`, {
-    method: "DELETE",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+  const response = await fetch(
+    `${API_URL}${apiRoute}${token != null && `?token=${token}`}`,
+    {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  );
 
   const json = await response.json();
 

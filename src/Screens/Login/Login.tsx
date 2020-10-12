@@ -26,8 +26,13 @@ const LoginScreen: React.FC<PropTypes> = ({ navigation }) => {
   const [password, setPassword] = React.useState<string>("");
 
   const handleLogin = async () => {
-    if (password.length < 8 || !emailRegex.test(email)) {
-      Alert.alert("Error", "Please fill out all fields!", [{ text: "Ok" }], {
+    if (!emailRegex.test(email)) {
+      Alert.alert("Error", "Invalid email!", [{ text: "Ok" }], {
+        cancelable: false,
+      });
+      return;
+    } else if (password.length < 8) {
+      Alert.alert("Error", "Invalid password!", [{ text: "Ok" }], {
         cancelable: false,
       });
       return;
@@ -39,12 +44,12 @@ const LoginScreen: React.FC<PropTypes> = ({ navigation }) => {
         password,
       });
 
-      dispatch(
+      await dispatch(
         setUser({
           user: response.user,
         })
       );
-      dispatch(
+      await dispatch(
         setToken({
           token: response.token,
         })

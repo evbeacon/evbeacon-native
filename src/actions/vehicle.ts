@@ -18,33 +18,46 @@ import {
 } from "../types/actions/vehicle";
 
 export const getVehicle = async (
+  token: string,
   params: GetVehicleParams
 ): Promise<GetVehicleResponse> =>
-  apiGetRequest<GetVehicleParams, GetVehicleResponse>("/vehicle", params);
+  apiGetRequest<GetVehicleParams, GetVehicleResponse>(
+    "/vehicle",
+    params,
+    token
+  );
 
 export const createVehicle = async (
+  token: string,
   params: CreateVehicleParams
 ): Promise<CreateVehicleResponse> =>
   apiPostRequest<CreateVehicleParams, CreateVehicleResponse>(
     "/vehicle",
-    params
+    params,
+    token
   );
 
 export const updateVehicle = async (
+  token: string,
   params: UpdateVehicleParams
 ): Promise<UpdateVehicleResponse> =>
   apiPatchRequest<UpdateVehicleParams, UpdateVehicleResponse>(
     "/vehicle",
-    params
+    params,
+    token
   );
 
 export const deleteVehicle = async (
+  token: string,
   params: DeleteVehicleParams
 ): Promise<DeleteVehicleResponse> =>
   apiDeleteRequest<DeleteVehicleParams, DeleteVehicleResponse>(
     "/vehicle",
-    params
+    params,
+    token
   );
 
-export const banVehicle = async (params: BanVehicleParams): Promise<void> =>
-  apiPutRequest<BanVehicleParams>("/vehicle", params);
+export const banVehicle = async (
+  token: string,
+  params: BanVehicleParams
+): Promise<void> => apiPutRequest<BanVehicleParams>("/vehicle", params, token);

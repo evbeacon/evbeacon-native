@@ -32,8 +32,8 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(setToken.pending, (state, action) => {
-      const { token } = (action.payload as unknown) as SetTokenAction;
+    builder.addCase(setToken.fulfilled, (state, action) => {
+      const { token } = action.payload;
 
       if (token != null && token.length > 0) {
         state.token = token;
@@ -43,7 +43,7 @@ const authSlice = createSlice({
         state.loggedIn = false;
       }
     });
-    builder.addCase(removeToken.pending, (state) => {
+    builder.addCase(removeToken.fulfilled, (state) => {
       state.token = null;
       state.user = null;
       state.loggedIn = false;
