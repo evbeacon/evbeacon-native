@@ -1,4 +1,4 @@
-import { SafeUserType } from "../../types/user";
+import type { SafeUserType } from "../../types/user";
 
 export interface AuthState {
   loggedIn: boolean;

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import * as SecureStore from "expo-secure-store";
-import { AuthState, SetTokenAction, SetUserAction } from "./types";
+import type { AuthState, SetTokenAction, SetUserAction } from "./types";
 
 const initialState: AuthState = {
   token: null,
