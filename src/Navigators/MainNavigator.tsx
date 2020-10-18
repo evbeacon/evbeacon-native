@@ -54,24 +54,8 @@ const MainNavigator: React.FC = () => {
           <Drawer.Screen name="Profile" component={ProfileScreen} />
         </>
       )}
-      <Drawer.Screen
-        name="AddCharger"
-        component={AddChargerScreen}
-        options={{
-          drawerLabel: () => null,
-          title: undefined,
-          drawerIcon: () => null,
-        }}
-      />
-      <Drawer.Screen
-        name="AddVehicle"
-        component={AddVehicleScreen}
-        options={{
-          drawerLabel: () => null,
-          title: undefined,
-          drawerIcon: () => null,
-        }}
-      />
+      <Drawer.Screen name="AddCharger" component={AddChargerScreen} />
+      <Drawer.Screen name="AddVehicle" component={AddVehicleScreen} />
     </Drawer.Navigator>
   );
 };

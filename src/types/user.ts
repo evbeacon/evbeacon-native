@@ -15,7 +15,7 @@ export type SafeUserType = {
   email: UserType["email"];
   role: UserType["role"];
   name: UserType["name"];
-  bio?: UserType["bio"];
+  bio: UserType["bio"];
   finishedCharger: UserType["finishedCharger"];
   finishedVehicle: UserType["finishedVehicle"];
   banned: UserType["banned"];
