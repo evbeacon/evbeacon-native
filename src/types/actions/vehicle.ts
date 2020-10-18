@@ -1,4 +1,4 @@
-import { VehicleType } from "../vehicle";
+import type { VehicleType } from "../vehicle";
 
 export type CreateVehicleParams = {
   year: VehicleType["year"];
@@ -12,10 +12,10 @@ export type CreateVehicleParams = {
 export type CreateVehicleResponse = VehicleType;
 
 export type GetVehicleParams = {
-  _id: VehicleType["_id"];
+  _id?: VehicleType["_id"];
 };
 
-export type GetVehicleResponse = VehicleType;
+export type GetVehicleResponse = VehicleType[];
 
 export type UpdateVehicleParams = {
   _id: VehicleType["_id"];
@@ -39,4 +39,4 @@ export type BanVehicleParams = {
   banned?: VehicleType["banned"];
 };
 
-export type BanVehicleResponse = null;
+export type BanVehicleResponse = void;

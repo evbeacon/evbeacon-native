@@ -1,4 +1,4 @@
-import { ReportType } from "../report";
+import type { ReportType } from "../report";
 
 export type CreateReportParams = {
   type: ReportType["type"];

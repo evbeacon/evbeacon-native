@@ -4,19 +4,10 @@ export type UserType = {
   password: string;
   role: "Admin" | "User";
   name: string;
-  bio?: string;
+  bio: string;
   finishedCharger: boolean;
   finishedVehicle: boolean;
   banned: boolean;
 };
 
-export type SafeUserType = {
-  _id: UserType["_id"];
-  email: UserType["email"];
-  role: UserType["role"];
-  name: UserType["name"];
-  bio: UserType["bio"];
-  finishedCharger: UserType["finishedCharger"];
-  finishedVehicle: UserType["finishedVehicle"];
-  banned: UserType["banned"];
-};
+export type SafeUserType = Omit<UserType, "password">;

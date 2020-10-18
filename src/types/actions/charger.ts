@@ -1,4 +1,4 @@
-import { ChargerType } from "../charger";
+import type { ChargerType } from "../charger";
 
 export type CreateChargerParams = {
   location: ChargerType["location"];
@@ -13,10 +13,10 @@ export type CreateChargerParams = {
 export type CreateChargerResponse = ChargerType;
 
 export type GetChargerParams = {
-  _id: ChargerType["_id"];
+  _id?: ChargerType["_id"];
 };
 
-export type GetChargerResponse = ChargerType;
+export type GetChargerResponse = ChargerType[];
 
 export type UpdateChargerParams = {
   _id: ChargerType["_id"];
@@ -40,4 +40,4 @@ export type BanChargerParams = {
   banned?: ChargerType["banned"];
 };
 
-export type BanChargerResponse = null;
+export type BanChargerResponse = void;

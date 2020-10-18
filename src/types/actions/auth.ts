@@ -1,4 +1,4 @@
-import { UserType, SafeUserType } from "../user";
+import type { UserType, SafeUserType } from "../user";
 
 export type LoginActionParams = {
   email: UserType["email"];

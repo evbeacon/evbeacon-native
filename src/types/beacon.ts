@@ -1,6 +1,7 @@
-import { UserType } from "./user";
-import { VehicleType } from "./vehicle";
-import { LocationType } from "./location";
+import type { UserType } from "./user";
+import type { VehicleType } from "./vehicle";
+import type { LocationType } from "./location";
+import type { ChargerType } from "./charger";
 
 export type BeaconType = {
   _id: string;

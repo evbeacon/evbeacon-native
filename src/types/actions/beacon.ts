@@ -1,5 +1,4 @@
-import { BeaconType } from "../beacon";
-import { ChargerType } from "../charger";
+import type { BeaconType } from "../beacon";
 
 export type CreateBeaconParams = {
   vehicle: BeaconType["vehicle"];
@@ -17,13 +16,13 @@ export type GetBeaconResponse = BeaconType;
 
 export type UpdateBeaconParams = {
   _id: BeaconType["_id"];
-  charger: ChargerType["_id"];
+  charger: BeaconType["allowedChargers"][0];
 };
 
 export type UpdateBeaconResponse = BeaconType;
 
 export type CancelBeaconParams = {
-  _id: ChargerType["_id"];
+  _id: BeaconType["_id"];
 };
 
-export type CancelBeaconResponse = null;
+export type CancelBeaconResponse = void;

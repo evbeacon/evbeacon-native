@@ -1,6 +1,6 @@
-import { UserType } from "./user";
-import { LocationType } from "./location";
-import { AddressType } from "./address";
+import type { UserType } from "./user";
+import type { LocationType } from "./location";
+import type { AddressType } from "./address";
 
 export type ChargerType = {
   _id: string;
