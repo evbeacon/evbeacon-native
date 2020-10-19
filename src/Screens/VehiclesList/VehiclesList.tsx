@@ -1,7 +1,15 @@
 import React from "react";
-import { StyleSheet, View, Text, Alert, FlatList } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Alert,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { Ionicons } from "@expo/vector-icons";
 import SwipeableItem from "../../components/SwipeableItem";
 import { MainStackParamList } from "../../types/navigation";
 import { getVehicle } from "../../actions/vehicle";
@@ -10,10 +18,10 @@ import { RootState } from "../../redux";
 import { VehicleType } from "../../types/vehicle";
 
 interface PropTypes {
-  navigation: DrawerNavigationProp<MainStackParamList, "ChargersList">;
+  navigation: DrawerNavigationProp<MainStackParamList, "Vehicles">;
 }
 
-const VehiclesListScreen: React.FC<PropTypes> = () => {
+const VehiclesListScreen: React.FC<PropTypes> = ({ navigation }) => {
   const dispatch = useDispatch();
   const token = useSelector((state: RootState) => state.auth.token);
   const vehicles = useSelector((state: RootState) => state.vehicle.vehicles);
@@ -68,46 +76,90 @@ const VehiclesListScreen: React.FC<PropTypes> = () => {
   };
 
   return (
-    <FlatList
-      data={vehicles}
-      onRefresh={handleRefresh}
-      refreshing={refreshing}
-      ListHeaderComponent={() => (
-        <View>
-          <Text>Vehicles</Text>
-        </View>
-      )}
-      ItemSeparatorComponent={() => <View style={styles.separator} />}
-      renderItem={({ item: vehicle }) => (
-        <SwipeableItem
-          style={styles.itemContainer}
-          rightActions={[
-            {
-              text: "Delete",
-              color: "#dc3545",
-              onPress: () => handleDelete(vehicle),
-            },
-          ]}
+    <View style={styles.root}>
+      <View style={styles.header}>
+        <View style={styles.headerSpacer} />
+        <Text style={styles.headerText}>Vehicles</Text>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => navigation.navigate("AddVehicle")}
         >
-          <Text>
-            {vehicle.make} {vehicle.model}
-          </Text>
-        </SwipeableItem>
-      )}
-      keyExtractor={(item) => item._id}
-    />
+          <Ionicons name="ios-add" size={30} color="black" />
+        </TouchableOpacity>
+      </View>
+      <FlatList
+        style={styles.list}
+        data={vehicles}
+        onRefresh={handleRefresh}
+        refreshing={refreshing}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
+        renderItem={({ item: vehicle }) => (
+          <SwipeableItem
+            style={styles.itemContainer}
+            rightActions={[
+              {
+                text: "Delete",
+                color: "#dc3545",
+                onPress: () => handleDelete(vehicle),
+              },
+            ]}
+          >
+            <Text style={styles.itemText}>
+              {vehicle.make} {vehicle.model}
+            </Text>
+          </SwipeableItem>
+        )}
+        keyExtractor={(item) => item._id}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    width: "100%",
+  },
+  header: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#ffffff",
+    borderBottomWidth: 2,
+    borderBottomColor: "#cccccc",
+    paddingHorizontal: 8,
+  },
+  headerSpacer: {
+    width: 50,
+    height: "100%",
+    padding: 8,
+  },
+  headerText: {
+    fontSize: 20,
+    color: "#000000",
+  },
+  addButton: {
+    width: 50,
+    height: "100%",
+    padding: 8,
+  },
+  list: {
+    flex: 1,
+    width: "100%",
+  },
   itemContainer: {
     flex: 1,
-    height: 80,
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
     paddingVertical: 10,
     paddingHorizontal: 20,
-    justifyContent: "space-between",
-    flexDirection: "column",
     backgroundColor: "#ffffff",
+  },
+  itemText: {
+    fontSize: 16,
   },
   separator: {
     backgroundColor: "rgb(200, 199, 204)",

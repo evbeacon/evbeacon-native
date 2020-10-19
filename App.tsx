@@ -42,7 +42,7 @@ const WrappedApp: React.FC = () => {
     <SafeAreaProvider>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
-          <SafeAreaView style={{ flex: 1 }}>
+          <SafeAreaView style={{ flex: 1 }} edges={["left", "top", "right"]}>
             <App />
           </SafeAreaView>
         </PersistGate>

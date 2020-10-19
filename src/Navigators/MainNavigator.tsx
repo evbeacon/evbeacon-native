@@ -66,8 +66,8 @@ const MainNavigator: React.FC = () => {
           <Drawer.Screen name="Home" component={HomeScreen} />
           <Drawer.Screen name="Notifications" component={NotificationsScreen} />
           <Drawer.Screen name="Profile" component={ProfileScreen} />
-          <Drawer.Screen name="ChargersList" component={ChargersListScreen} />
-          <Drawer.Screen name="VehiclesList" component={VehiclesListScreen} />
+          <Drawer.Screen name="Chargers" component={ChargersListScreen} />
+          <Drawer.Screen name="Vehicles" component={VehiclesListScreen} />
         </>
       )}
       <Drawer.Screen name="AddCharger" component={AddChargerScreen} />
