@@ -1,15 +1,11 @@
 import type { SafeUserType } from "../../types/user";
 
-export interface AuthState {
+export type AuthState = {
   loggedIn: boolean;
   token: string | null;
   user: SafeUserType | null;
-}
+};
 
-export interface SetUserAction {
-  user: AuthState["user"];
-}
+export type SetUserAction = AuthState["user"];
 
-export interface SetTokenAction {
-  token: AuthState["token"];
-}
+export type SetTokenAction = AuthState["token"];

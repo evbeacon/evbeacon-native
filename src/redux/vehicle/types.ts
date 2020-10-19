@@ -1,11 +1,9 @@
 import type { VehicleType } from "../../types/vehicle";
 
-export interface VehicleState {
+export type VehicleState = {
   loaded: boolean;
   error: string | null;
-  vehicles: VehicleType[] | null;
-}
+  vehicles: VehicleType[];
+};
 
-export interface SetVehiclesAction {
-  vehicles: VehicleState["vehicles"];
-}
+export type SetVehiclesAction = VehicleState["vehicles"];

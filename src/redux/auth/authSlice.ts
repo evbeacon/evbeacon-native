@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import * as SecureStore from "expo-secure-store";
 import type { AuthState, SetTokenAction, SetUserAction } from "./types";
 
@@ -8,12 +8,14 @@ const initialState: AuthState = {
   user: null,
 };
 
-const setToken = createAsyncThunk(
+const setToken = createAsyncThunk<SetTokenAction, string>(
   "auth/setToken",
-  async (payload: SetTokenAction) => {
-    await SecureStore.setItemAsync("token", payload.token!);
+  async (token: SetTokenAction) => {
+    if (token != null) {
+      await SecureStore.setItemAsync("token", token);
+    }
 
-    return payload as SetTokenAction;
+    return token;
   }
 );
 
@@ -26,14 +28,12 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action: PayloadAction<SetUserAction>) {
-      const { user } = action.payload;
-
-      state.user = user;
+      state.user = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(setToken.fulfilled, (state, action) => {
-      const { token } = action.payload;
+      const token = action.payload;
 
       if (token != null && token.length > 0) {
         state.token = token;

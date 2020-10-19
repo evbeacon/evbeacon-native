@@ -12,9 +12,7 @@ const vehicleSlice = createSlice({
   initialState,
   reducers: {
     setVehicles(state, action: PayloadAction<SetVehiclesAction>) {
-      const { vehicles } = action.payload;
-
-      state.vehicles = vehicles;
+      state.vehicles = action.payload;
     },
     clearVehicles() {
       return initialState;

@@ -2,15 +2,12 @@ import React from "react";
 import { Provider, useSelector } from "react-redux";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
-import * as SecureStore from "expo-secure-store";
+import { PersistGate } from "redux-persist/integration/react";
 import * as SplashScreen from "expo-splash-screen";
-import * as Location from "expo-location";
 import MainNavigator from "./src/Navigators/MainNavigator";
 import AuthNavigator from "./src/Navigators/AuthNavigator";
-import store, { RootState } from "./src/redux";
-import { setToken, setUser } from "./src/redux/auth/authSlice";
-import { getUser } from "./src/actions/user";
-import { Alert } from "react-native";
+import { store, persistor, RootState } from "./src/redux";
+import { setupPermissions, setupRedux } from "./src/utils/initializers";
 
 const App: React.FC = () => {
   const token = useSelector((state: RootState) => state.auth.token);
@@ -29,47 +26,11 @@ const WrappedApp: React.FC = () => {
     (async () => {
       await SplashScreen.preventAutoHideAsync();
 
-      const storedToken = await SecureStore.getItemAsync("token");
-
-      if (storedToken != null) {
-        try {
-          const user = await getUser(storedToken, {});
-
-          await store.dispatch(
-            setToken({
-              token: storedToken.toString(),
-            })
-          );
-
-          await store.dispatch(
-            setUser({
-              user,
-            })
-          );
-        } catch (error) {
-          Alert.alert("Error", error.message, [{ text: "Ok" }], {
-            cancelable: false,
-          });
-        }
-      }
+      await setupPermissions();
+      await setupRedux();
 
       await SplashScreen.hideAsync();
       setIsLoading(false);
-    })();
-  }, []);
-
-  React.useEffect(() => {
-    (async () => {
-      try {
-        const { status } = await Location.requestPermissionsAsync();
-        if (status !== "granted") {
-          throw new Error("Permission to access location was denied");
-        }
-      } catch (error) {
-        Alert.alert("Error", error.message, [{ text: "Ok" }], {
-          cancelable: false,
-        });
-      }
     })();
   }, []);
 
@@ -80,9 +41,11 @@ const WrappedApp: React.FC = () => {
   return (
     <SafeAreaProvider>
       <Provider store={store}>
-        <SafeAreaView style={{ flex: 1 }}>
-          <App />
-        </SafeAreaView>
+        <PersistGate persistor={persistor}>
+          <SafeAreaView style={{ flex: 1 }}>
+            <App />
+          </SafeAreaView>
+        </PersistGate>
       </Provider>
     </SafeAreaProvider>
   );

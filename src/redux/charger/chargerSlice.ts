@@ -12,9 +12,7 @@ const chargerSlice = createSlice({
   initialState,
   reducers: {
     setChargers(state, action: PayloadAction<SetChargersAction>) {
-      const { chargers } = action.payload;
-
-      state.chargers = chargers;
+      state.chargers = action.payload;
     },
     clearChargers() {
       return initialState;

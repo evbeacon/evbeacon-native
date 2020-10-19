@@ -1,11 +1,9 @@
 import type { ChargerType } from "../../types/charger";
 
-export interface ChargerState {
+export type ChargerState = {
   loaded: boolean;
   error: string | null;
   chargers: ChargerType[];
-}
+};
 
-export interface SetChargersAction {
-  chargers: ChargerState["chargers"];
-}
+export type SetChargersAction = ChargerState["chargers"];
