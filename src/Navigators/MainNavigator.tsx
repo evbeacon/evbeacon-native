@@ -6,7 +6,9 @@ import HomeScreen from "../Screens/Home";
 import NotificationsScreen from "../Screens/Notifications";
 import ProfileScreen from "../Screens/Profile";
 import AddChargerScreen from "../Screens/AddCharger";
+import ChargersListScreen from "../Screens/ChargersList";
 import AddVehicleScreen from "../Screens/AddVehicle";
+import VehiclesListScreen from "../Screens/VehiclesList";
 import CustomDrawerContent from "../components/CustomDrawerContent";
 import { setupAuthed } from "../utils/initializers";
 import { RootState } from "../redux";
@@ -64,6 +66,8 @@ const MainNavigator: React.FC = () => {
           <Drawer.Screen name="Home" component={HomeScreen} />
           <Drawer.Screen name="Notifications" component={NotificationsScreen} />
           <Drawer.Screen name="Profile" component={ProfileScreen} />
+          <Drawer.Screen name="ChargersList" component={ChargersListScreen} />
+          <Drawer.Screen name="VehiclesList" component={VehiclesListScreen} />
         </>
       )}
       <Drawer.Screen name="AddCharger" component={AddChargerScreen} />

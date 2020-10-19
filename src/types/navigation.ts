@@ -8,5 +8,7 @@ export type MainStackParamList = {
   Notifications: undefined;
   Profile: undefined;
   AddCharger: undefined;
+  ChargersList: undefined;
   AddVehicle: undefined;
+  VehiclesList: undefined;
 };
