@@ -44,16 +44,8 @@ const LoginScreen: React.FC<PropTypes> = ({ navigation }) => {
         password,
       });
 
-      await dispatch(
-        setUser({
-          user: response.user,
-        })
-      );
-      await dispatch(
-        setToken({
-          token: response.token,
-        })
-      );
+      await dispatch(setUser(response.user));
+      await dispatch(setToken(response.token));
     } catch (error) {
       Alert.alert("Error", error.message, [{ text: "Ok" }], {
         cancelable: false,

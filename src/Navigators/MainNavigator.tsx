@@ -18,8 +18,12 @@ const hiddenRoutes = ["AddCharger", "AddVehicle"];
 const MainNavigator: React.FC = () => {
   const dimensions = useWindowDimensions();
   const auth = useSelector((state: RootState) => state.auth);
-  const chargers = useSelector((state: RootState) => state.charger.chargers);
-  const vehicles = useSelector((state: RootState) => state.vehicle.vehicles);
+  const chargersLen = useSelector(
+    (state: RootState) => state.charger.chargers.length
+  );
+  const vehiclesLen = useSelector(
+    (state: RootState) => state.vehicle.vehicles.length
+  );
 
   React.useEffect(() => {
     (async () => {
@@ -39,9 +43,9 @@ const MainNavigator: React.FC = () => {
   }, [auth.user]);
 
   let initialRoute = "Home";
-  if (!auth.user!.finishedCharger || chargers.length === 0) {
+  if (!auth.user!.finishedCharger || chargersLen === 0) {
     initialRoute = "AddCharger";
-  } else if (!auth.user!.finishedVehicle || vehicles.length === 0) {
+  } else if (!auth.user!.finishedVehicle || vehiclesLen === 0) {
     initialRoute = "AddVehicle";
   }
 

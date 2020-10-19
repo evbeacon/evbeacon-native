@@ -67,11 +67,7 @@ const AddVehicleScreen: React.FC<PropTypes> = ({ navigation }) => {
         finishedVehicle: true,
       });
 
-      await dispatch(
-        setUser({
-          user: updatedUser,
-        })
-      );
+      await dispatch(setUser(updatedUser));
 
       await navigation.navigate("Home");
     } catch (error) {

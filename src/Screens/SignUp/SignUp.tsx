@@ -62,16 +62,8 @@ const SignUpScreen: React.FC<PropTypes> = ({ navigation }) => {
         password,
       });
 
-      dispatch(
-        setUser({
-          user: response.user,
-        })
-      );
-      dispatch(
-        setToken({
-          token: response.token,
-        })
-      );
+      await dispatch(setUser(response.user));
+      await dispatch(setToken(response.token));
     } catch (error) {
       Alert.alert("Error", error.message, [{ text: "Ok" }], {
         cancelable: false,

@@ -111,11 +111,7 @@ const AddChargerScreen: React.FC<PropTypes> = ({ navigation }) => {
         finishedCharger: true,
       });
 
-      await dispatch(
-        setUser({
-          user: updatedUser,
-        })
-      );
+      await dispatch(setUser(updatedUser));
 
       await navigation.navigate("AddVehicle");
     } catch (error) {
