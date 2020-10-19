@@ -68,8 +68,12 @@ const SwipeableItem: React.FC<PropTypes> = ({
       friction={2}
       leftThreshold={30}
       rightThreshold={40}
-      renderLeftActions={renderLeftActions}
-      renderRightActions={renderRightActions}
+      renderLeftActions={
+        leftActions?.length > 0 ? renderLeftActions : undefined
+      }
+      renderRightActions={
+        rightActions?.length > 0 ? renderRightActions : undefined
+      }
     >
       <RectButton style={style} onPress={onPress}>
         {children}

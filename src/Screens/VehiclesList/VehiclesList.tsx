@@ -96,13 +96,17 @@ const VehiclesListScreen: React.FC<PropTypes> = ({ navigation }) => {
         renderItem={({ item: vehicle }) => (
           <SwipeableItem
             style={styles.itemContainer}
-            rightActions={[
-              {
-                text: "Delete",
-                color: "#dc3545",
-                onPress: () => handleDelete(vehicle),
-              },
-            ]}
+            rightActions={
+              vehicles.length > 1
+                ? [
+                    {
+                      text: "Delete",
+                      color: "#dc3545",
+                      onPress: () => handleDelete(vehicle),
+                    },
+                  ]
+                : undefined
+            }
           >
             <Text style={styles.itemText}>
               {vehicle.make} {vehicle.model}

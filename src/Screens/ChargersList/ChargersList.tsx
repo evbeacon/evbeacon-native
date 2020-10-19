@@ -96,13 +96,17 @@ const ChargersListScreen: React.FC<PropTypes> = ({ navigation }) => {
         renderItem={({ item: charger }) => (
           <SwipeableItem
             style={styles.itemContainer}
-            rightActions={[
-              {
-                text: "Delete",
-                color: "#dc3545",
-                onPress: () => handleDelete(charger),
-              },
-            ]}
+            rightActions={
+              chargers.length > 1
+                ? [
+                    {
+                      text: "Delete",
+                      color: "#dc3545",
+                      onPress: () => handleDelete(charger),
+                    },
+                  ]
+                : undefined
+            }
           >
             <Text style={styles.itemText}>{charger.address.street}</Text>
           </SwipeableItem>
