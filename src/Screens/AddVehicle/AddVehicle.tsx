@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, TouchableHighlight, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  Alert,
+  View,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
@@ -78,83 +84,82 @@ const AddVehicleScreen: React.FC<PropTypes> = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAwareScrollView
-      style={styles.root}
-      contentContainerStyle={styles.container}
-    >
-      <Picker
-        label="Year"
-        selectedValue={year.toString()}
-        style={[styles.pickerTextContainer, styles.spacer]}
-        pickerStyle={styles.picker}
-        onValueChange={(itemValue) =>
-          setYear(parseInt(itemValue.toString(), 10))
-        }
-      >
-        {range(dayjs().year() + 1, 1899, -1).map((item) => (
-          <Picker.Item
-            key={item}
-            label={item.toString()}
-            value={item.toString()}
-          />
-        ))}
-      </Picker>
-      <Picker
-        label="Make"
-        selectedValue={make}
-        style={[styles.pickerTextContainer, styles.spacer]}
-        pickerStyle={styles.picker}
-        onValueChange={(itemValue) => setMake(itemValue.toString())}
-      >
-        {cars.makes.map((item) => (
-          <Picker.Item key={item} label={item} value={item} />
-        ))}
-      </Picker>
-      <Picker
-        label="Model"
-        selectedValue={model}
-        style={[styles.pickerTextContainer, styles.spacer]}
-        pickerStyle={styles.picker}
-        onValueChange={(itemValue) => setModel(itemValue.toString())}
-      >
-        {(make === "" ? [] : cars.modelsByMake[make]).map((item) => (
-          <Picker.Item key={item} label={item} value={item} />
-        ))}
-      </Picker>
-      <Picker
-        label="Color"
-        selectedValue={color}
-        style={[styles.pickerTextContainer, styles.spacer]}
-        pickerStyle={styles.picker}
-        onValueChange={(itemValue) => setColor(itemValue.toString())}
-      >
-        {cars.colors.map((item) => (
-          <Picker.Item key={item} label={item} value={item} />
-        ))}
-      </Picker>
-      <Picker
-        label="Plug Type"
-        selectedValue={plugType}
-        style={[styles.pickerTextContainer, styles.spacer]}
-        pickerStyle={styles.picker}
-        onValueChange={(itemValue) => setPlugType(itemValue.toString())}
-      >
-        {cars.plugTypes.map((item) => (
-          <Picker.Item key={item} label={item} value={item} />
-        ))}
-      </Picker>
-      <FormInput
-        label="License Plate"
-        containerStyle={styles.spacer}
-        onChangeText={(text) => setLicensePlate(text)}
-        value={licensePlate}
-      />
-      <TouchableHighlight
-        style={[styles.button, styles.spacer]}
-        onPress={handleCreate}
-      >
-        <Text style={[styles.actionText, styles.buttonText]}>Create</Text>
-      </TouchableHighlight>
+    <KeyboardAwareScrollView style={styles.root}>
+      <View style={styles.container}>
+        <Picker
+          label="Year"
+          selectedValue={year.toString()}
+          style={[styles.pickerTextContainer, styles.spacer]}
+          pickerStyle={styles.picker}
+          onValueChange={(itemValue) =>
+            setYear(parseInt(itemValue.toString(), 10))
+          }
+        >
+          {range(dayjs().year() + 1, 1899, -1).map((item) => (
+            <Picker.Item
+              key={item}
+              label={item.toString()}
+              value={item.toString()}
+            />
+          ))}
+        </Picker>
+        <Picker
+          label="Make"
+          selectedValue={make}
+          style={[styles.pickerTextContainer, styles.spacer]}
+          pickerStyle={styles.picker}
+          onValueChange={(itemValue) => setMake(itemValue.toString())}
+        >
+          {cars.makes.map((item) => (
+            <Picker.Item key={item} label={item} value={item} />
+          ))}
+        </Picker>
+        <Picker
+          label="Model"
+          selectedValue={model}
+          style={[styles.pickerTextContainer, styles.spacer]}
+          pickerStyle={styles.picker}
+          onValueChange={(itemValue) => setModel(itemValue.toString())}
+        >
+          {(make === "" ? [] : cars.modelsByMake[make]).map((item) => (
+            <Picker.Item key={item} label={item} value={item} />
+          ))}
+        </Picker>
+        <Picker
+          label="Color"
+          selectedValue={color}
+          style={[styles.pickerTextContainer, styles.spacer]}
+          pickerStyle={styles.picker}
+          onValueChange={(itemValue) => setColor(itemValue.toString())}
+        >
+          {cars.colors.map((item) => (
+            <Picker.Item key={item} label={item} value={item} />
+          ))}
+        </Picker>
+        <Picker
+          label="Plug Type"
+          selectedValue={plugType}
+          style={[styles.pickerTextContainer, styles.spacer]}
+          pickerStyle={styles.picker}
+          onValueChange={(itemValue) => setPlugType(itemValue.toString())}
+        >
+          {cars.plugTypes.map((item) => (
+            <Picker.Item key={item} label={item} value={item} />
+          ))}
+        </Picker>
+        <FormInput
+          label="License Plate"
+          containerStyle={styles.spacer}
+          onChangeText={(text) => setLicensePlate(text)}
+          value={licensePlate}
+        />
+        <TouchableHighlight
+          style={[styles.button, styles.spacer]}
+          onPress={handleCreate}
+        >
+          <Text style={[styles.actionText, styles.buttonText]}>Create</Text>
+        </TouchableHighlight>
+      </View>
     </KeyboardAwareScrollView>
   );
 };

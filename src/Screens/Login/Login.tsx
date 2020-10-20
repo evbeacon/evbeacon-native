@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   StyleSheet,
   Alert,
+  View,
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -54,37 +55,36 @@ const LoginScreen: React.FC<PropTypes> = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAwareScrollView
-      style={styles.root}
-      contentContainerStyle={styles.container}
-    >
-      <TextInput
-        style={[styles.input, styles.spacer]}
-        placeholder="Email"
-        textContentType="emailAddress"
-        onChangeText={(text) => setEmail(text)}
-        value={email}
-      />
-      <TextInput
-        style={[styles.input, styles.spacer]}
-        placeholder="Password"
-        textContentType="password"
-        secureTextEntry
-        onChangeText={(text) => setPassword(text)}
-        value={password}
-      />
-      <TouchableHighlight
-        style={[styles.button, styles.spacer]}
-        onPress={handleLogin}
-      >
-        <Text style={[styles.actionText, styles.buttonText]}>Login</Text>
-      </TouchableHighlight>
-      <TouchableWithoutFeedback
-        style={styles.link}
-        onPress={() => navigation.navigate("SignUp")}
-      >
-        <Text style={styles.actionText}>Sign Up</Text>
-      </TouchableWithoutFeedback>
+    <KeyboardAwareScrollView style={styles.root}>
+      <View style={styles.container}>
+        <TextInput
+          style={[styles.input, styles.spacer]}
+          placeholder="Email"
+          textContentType="emailAddress"
+          onChangeText={(text) => setEmail(text)}
+          value={email}
+        />
+        <TextInput
+          style={[styles.input, styles.spacer]}
+          placeholder="Password"
+          textContentType="password"
+          secureTextEntry
+          onChangeText={(text) => setPassword(text)}
+          value={password}
+        />
+        <TouchableHighlight
+          style={[styles.button, styles.spacer]}
+          onPress={handleLogin}
+        >
+          <Text style={[styles.actionText, styles.buttonText]}>Login</Text>
+        </TouchableHighlight>
+        <TouchableWithoutFeedback
+          style={styles.link}
+          onPress={() => navigation.navigate("SignUp")}
+        >
+          <Text style={styles.actionText}>Sign Up</Text>
+        </TouchableWithoutFeedback>
+      </View>
     </KeyboardAwareScrollView>
   );
 };

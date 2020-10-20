@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Animated, StyleProp, View, ViewStyle } from "react-native";
+import { Animated, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { RectButton } from "react-native-gesture-handler";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
@@ -29,12 +29,17 @@ const SwipeableItem: React.FC<PropTypes> = ({
 
   const renderLeftActions = (progress: Animated.AnimatedInterpolation) => (
     <View
-      style={{
-        width: safeFrame.width,
-      }}
+      style={[
+        styles.actionContainer,
+        {
+          width: safeFrame.width,
+        },
+      ]}
     >
-      {leftActions.reverse().map((action, index) => (
+      {leftActions.map((action, index) => (
         <SwipeableAction
+          direction="LEFT"
+          key={`${action.text}-${action.color}`}
           text={action.text}
           color={action.color}
           x={(safeFrame.width / leftActions.length) * (index + 1)}
@@ -47,12 +52,17 @@ const SwipeableItem: React.FC<PropTypes> = ({
 
   const renderRightActions = (progress: Animated.AnimatedInterpolation) => (
     <View
-      style={{
-        width: safeFrame.width,
-      }}
+      style={[
+        styles.actionContainer,
+        {
+          width: safeFrame.width,
+        },
+      ]}
     >
-      {rightActions.reverse().map((action, index) => (
+      {rightActions.map((action, index) => (
         <SwipeableAction
+          direction="RIGHT"
+          key={`${action.text}-${action.color}`}
           text={action.text}
           color={action.color}
           x={(safeFrame.width / rightActions.length) * (index + 1)}
@@ -81,5 +91,11 @@ const SwipeableItem: React.FC<PropTypes> = ({
     </Swipeable>
   );
 };
+
+const styles = StyleSheet.create({
+  actionContainer: {
+    flexDirection: "row",
+  },
+});
 
 export default SwipeableItem;

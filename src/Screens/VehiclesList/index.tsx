@@ -1,3 +1,3 @@
-import ChargersListScreen from "./VehiclesList";
+import VehiclesListScreen from "./VehiclesList";
 
-export default ChargersListScreen;
+export default VehiclesListScreen;

@@ -6,8 +6,10 @@ import HomeScreen from "../Screens/Home";
 import NotificationsScreen from "../Screens/Notifications";
 import ProfileScreen from "../Screens/Profile";
 import AddChargerScreen from "../Screens/AddCharger";
+import EditChargerScreen from "../Screens/EditCharger";
 import ChargersListScreen from "../Screens/ChargersList";
 import AddVehicleScreen from "../Screens/AddVehicle";
+import EditVehicleScreen from "../Screens/EditVehicle";
 import VehiclesListScreen from "../Screens/VehiclesList";
 import CustomDrawerContent from "../components/CustomDrawerContent";
 import { setupAuthed } from "../utils/initializers";
@@ -15,7 +17,7 @@ import { RootState } from "../redux";
 
 const Drawer = createDrawerNavigator();
 
-const hiddenRoutes = ["AddCharger", "AddVehicle"];
+const hiddenRoutes = ["AddCharger", "EditCharger", "AddVehicle", "EditVehicle"];
 
 const MainNavigator: React.FC = () => {
   const dimensions = useWindowDimensions();
@@ -29,7 +31,7 @@ const MainNavigator: React.FC = () => {
 
   React.useEffect(() => {
     (async () => {
-      await setupAuthed(auth!.token!);
+      await setupAuthed();
 
       if (!completedSetup) {
         Alert.alert(
@@ -66,7 +68,9 @@ const MainNavigator: React.FC = () => {
           <Drawer.Screen name="Home" component={HomeScreen} />
           <Drawer.Screen name="Notifications" component={NotificationsScreen} />
           <Drawer.Screen name="Profile" component={ProfileScreen} />
+          <Drawer.Screen name="EditCharger" component={EditChargerScreen} />
           <Drawer.Screen name="Chargers" component={ChargersListScreen} />
+          <Drawer.Screen name="EditVehicle" component={EditVehicleScreen} />
           <Drawer.Screen name="Vehicles" component={VehiclesListScreen} />
         </>
       )}

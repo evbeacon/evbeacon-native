@@ -12,8 +12,7 @@ import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { Ionicons } from "@expo/vector-icons";
 import SwipeableItem from "../../components/SwipeableItem";
 import { MainStackParamList } from "../../types/navigation";
-import { getVehicle } from "../../actions/vehicle";
-import { setVehicles } from "../../redux/vehicle/vehicleSlice";
+import { getVehicles } from "../../redux/vehicle/vehicleSlice";
 import { RootState } from "../../redux";
 import { VehicleType } from "../../types/vehicle";
 
@@ -36,9 +35,7 @@ const VehiclesListScreen: React.FC<PropTypes> = ({ navigation }) => {
   const handleRefresh = async (): Promise<void> => {
     try {
       setRefreshing(true);
-      const newVehicles = await getVehicle(token!, {});
-
-      await dispatch(setVehicles(newVehicles));
+      await dispatch(getVehicles());
       setRefreshing(false);
     } catch (error) {
       Alert.alert(
@@ -96,6 +93,16 @@ const VehiclesListScreen: React.FC<PropTypes> = ({ navigation }) => {
         renderItem={({ item: vehicle }) => (
           <SwipeableItem
             style={styles.itemContainer}
+            leftActions={[
+              {
+                text: "Edit",
+                color: "#17a2b8",
+                onPress: () =>
+                  navigation.navigate("EditVehicle", {
+                    vehicle,
+                  }),
+              },
+            ]}
             rightActions={
               vehicles.length > 1
                 ? [

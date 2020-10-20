@@ -6,8 +6,8 @@ import { getCharger } from "../actions/charger";
 import { getVehicle } from "../actions/vehicle";
 import { store } from "../redux";
 import { setToken, setUser } from "../redux/auth/authSlice";
-import { setChargers } from "../redux/charger/chargerSlice";
-import { setVehicles } from "../redux/vehicle/vehicleSlice";
+import { getChargers } from "../redux/charger/chargerSlice";
+import { getVehicles } from "../redux/vehicle/vehicleSlice";
 
 export const setupPermissions = async (): Promise<void> => {
   try {
@@ -40,13 +40,10 @@ export const setupRedux = async (): Promise<void> => {
   }
 };
 
-export const setupAuthed = async (token: string): Promise<void> => {
+export const setupAuthed = async (): Promise<void> => {
   try {
-    const chargers = await getCharger(token, {});
-    await store.dispatch(setChargers(chargers));
-
-    const vehicles = await getVehicle(token, {});
-    await store.dispatch(setVehicles(vehicles));
+    await store.dispatch(getChargers());
+    await store.dispatch(getVehicles());
   } catch (error) {
     Alert.alert("Error", error.message, [{ text: "Ok" }], {
       cancelable: false,

@@ -36,7 +36,18 @@ const DateTimePicker: React.FC<PropTypes> = ({
 }: PropTypes) => {
   const [open, setOpen] = React.useState<boolean>(false);
 
-  const formattedValue = dayjs(value).format(mode === "time" ? "LT" : "L");
+  let formatter = "";
+  if (mode?.startsWith("date")) {
+    formatter += "MMM D, ";
+  }
+  if (mode?.endsWith("time")) {
+    formatter += "LT";
+  }
+  formatter = formatter.trim();
+  if (formatter.endsWith(",")) {
+    formatter = formatter.substr(0, formatter.length - 1);
+  }
+  const formattedValue = dayjs(value).format(formatter);
 
   const handleConfirm = (date: Date) => {
     if (date != null) {
@@ -57,6 +68,7 @@ const DateTimePicker: React.FC<PropTypes> = ({
         isVisible={open}
         mode={mode}
         headerTextIOS={`Pick a ${mode}`}
+        date={value}
         minimumDate={minCurrent ? new Date() : undefined}
         maximumDate={maxCurrent ? new Date() : undefined}
         onCancel={() => setOpen(false)}

@@ -7,3 +7,5 @@ export type VehicleState = {
 };
 
 export type SetVehiclesAction = VehicleState["vehicles"];
+export type UpdateVehicleAction = VehicleType;
+export type DeleteVehicleAction = VehicleType;

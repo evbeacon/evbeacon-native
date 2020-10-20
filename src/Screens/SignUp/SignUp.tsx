@@ -6,6 +6,7 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
   Alert,
+  View,
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -72,59 +73,58 @@ const SignUpScreen: React.FC<PropTypes> = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAwareScrollView
-      style={styles.root}
-      contentContainerStyle={styles.container}
-    >
-      <TextInput
-        style={[styles.input, styles.spacer]}
-        placeholder="First Name"
-        textContentType="givenName"
-        onChangeText={(text) => setFirstName(text)}
-        value={firstName}
-      />
-      <TextInput
-        style={[styles.input, styles.spacer]}
-        placeholder="Last Name"
-        textContentType="familyName"
-        onChangeText={(text) => setLastName(text)}
-        value={lastName}
-      />
-      <TextInput
-        style={[styles.input, styles.spacer]}
-        placeholder="Email"
-        textContentType="emailAddress"
-        onChangeText={(text) => setEmail(text)}
-        value={email}
-      />
-      <TextInput
-        style={[styles.input, styles.spacer]}
-        placeholder="Password"
-        textContentType="newPassword"
-        secureTextEntry
-        onChangeText={(text) => setPassword(text)}
-        value={password}
-      />
-      <TextInput
-        style={[styles.input, styles.spacer]}
-        placeholder="Confirm Password"
-        textContentType="newPassword"
-        secureTextEntry
-        onChangeText={(text) => setConfirmPassword(text)}
-        value={confirmPassword}
-      />
-      <TouchableHighlight
-        style={[styles.button, styles.spacer]}
-        onPress={handleSignUp}
-      >
-        <Text style={[styles.actionText, styles.buttonText]}>Sign Up</Text>
-      </TouchableHighlight>
-      <TouchableWithoutFeedback
-        style={styles.link}
-        onPress={() => navigation.navigate("Login")}
-      >
-        <Text style={styles.actionText}>Login</Text>
-      </TouchableWithoutFeedback>
+    <KeyboardAwareScrollView style={styles.root}>
+      <View style={styles.container}>
+        <TextInput
+          style={[styles.input, styles.spacer]}
+          placeholder="First Name"
+          textContentType="givenName"
+          onChangeText={(text) => setFirstName(text)}
+          value={firstName}
+        />
+        <TextInput
+          style={[styles.input, styles.spacer]}
+          placeholder="Last Name"
+          textContentType="familyName"
+          onChangeText={(text) => setLastName(text)}
+          value={lastName}
+        />
+        <TextInput
+          style={[styles.input, styles.spacer]}
+          placeholder="Email"
+          textContentType="emailAddress"
+          onChangeText={(text) => setEmail(text)}
+          value={email}
+        />
+        <TextInput
+          style={[styles.input, styles.spacer]}
+          placeholder="Password"
+          textContentType="newPassword"
+          secureTextEntry
+          onChangeText={(text) => setPassword(text)}
+          value={password}
+        />
+        <TextInput
+          style={[styles.input, styles.spacer]}
+          placeholder="Confirm Password"
+          textContentType="newPassword"
+          secureTextEntry
+          onChangeText={(text) => setConfirmPassword(text)}
+          value={confirmPassword}
+        />
+        <TouchableHighlight
+          style={[styles.button, styles.spacer]}
+          onPress={handleSignUp}
+        >
+          <Text style={[styles.actionText, styles.buttonText]}>Sign Up</Text>
+        </TouchableHighlight>
+        <TouchableWithoutFeedback
+          style={styles.link}
+          onPress={() => navigation.navigate("Login")}
+        >
+          <Text style={styles.actionText}>Login</Text>
+        </TouchableWithoutFeedback>
+      </View>
     </KeyboardAwareScrollView>
   );
 };

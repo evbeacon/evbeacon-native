@@ -1,6 +1,7 @@
 import React from "react";
 import { Provider, useSelector } from "react-redux";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { enableScreens } from "react-native-screens";
 import { NavigationContainer } from "@react-navigation/native";
 import { PersistGate } from "redux-persist/integration/react";
 import * as SplashScreen from "expo-splash-screen";
@@ -8,6 +9,8 @@ import MainNavigator from "./src/Navigators/MainNavigator";
 import AuthNavigator from "./src/Navigators/AuthNavigator";
 import { store, persistor, RootState } from "./src/redux";
 import { setupPermissions, setupRedux } from "./src/utils/initializers";
+
+enableScreens();
 
 const App: React.FC = () => {
   const token = useSelector((state: RootState) => state.auth.token);

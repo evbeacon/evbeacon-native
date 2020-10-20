@@ -20,6 +20,7 @@ const FormInput: React.FC<PropTypes> = ({
   style,
   containerStyle,
   multiline = false,
+  editable = true,
   ...rest
 }: PropTypes) => {
   const inputRef = React.useRef<TextInput>(null);
@@ -33,6 +34,7 @@ const FormInput: React.FC<PropTypes> = ({
       style={{
         ...styles.container,
         ...(multiline && styles.multilineContainer),
+        ...(!editable && styles.disabledContainer),
         ...(containerStyle as Record<string, unknown>),
       }}
     >
@@ -42,6 +44,7 @@ const FormInput: React.FC<PropTypes> = ({
         </TouchableWithoutFeedback>
       )}
       <TextInput
+        editable={editable}
         multiline={multiline}
         ref={inputRef}
         style={{
@@ -66,6 +69,10 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 8,
     fontSize: 20,
+    backgroundColor: "#ffffff",
+  },
+  disabledContainer: {
+    backgroundColor: "#cccccc",
   },
   multilineContainer: {
     flexDirection: "column",

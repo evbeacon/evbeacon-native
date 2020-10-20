@@ -7,13 +7,12 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import SwipeableItem from "../../components/SwipeableItem";
 import { MainStackParamList } from "../../types/navigation";
-import { getCharger } from "../../actions/charger";
-import { setChargers } from "../../redux/charger/chargerSlice";
-import { RootState } from "../../redux";
+import { getChargers } from "../../redux/charger/chargerSlice";
+import { useAppDispatch, RootState } from "../../redux";
 import { ChargerType } from "../../types/charger";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -22,7 +21,7 @@ interface PropTypes {
 }
 
 const ChargersListScreen: React.FC<PropTypes> = ({ navigation }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const token = useSelector((state: RootState) => state.auth.token);
   const chargers = useSelector((state: RootState) => state.charger.chargers);
   const [refreshing, setRefreshing] = React.useState<boolean>(false);
@@ -36,9 +35,8 @@ const ChargersListScreen: React.FC<PropTypes> = ({ navigation }) => {
   const handleRefresh = async (): Promise<void> => {
     try {
       setRefreshing(true);
-      const newChargers = await getCharger(token!, {});
 
-      await dispatch(setChargers(newChargers));
+      await dispatch(getChargers());
       setRefreshing(false);
     } catch (error) {
       Alert.alert(
@@ -82,7 +80,7 @@ const ChargersListScreen: React.FC<PropTypes> = ({ navigation }) => {
         <Text style={styles.headerText}>Chargers</Text>
         <TouchableOpacity
           style={styles.addButton}
-          onPress={() => navigation.navigate("AddVehicle")}
+          onPress={() => navigation.navigate("AddCharger")}
         >
           <Ionicons name="ios-add" size={30} color="black" />
         </TouchableOpacity>
@@ -96,6 +94,16 @@ const ChargersListScreen: React.FC<PropTypes> = ({ navigation }) => {
         renderItem={({ item: charger }) => (
           <SwipeableItem
             style={styles.itemContainer}
+            leftActions={[
+              {
+                text: "Edit",
+                color: "#17a2b8",
+                onPress: () =>
+                  navigation.navigate("EditCharger", {
+                    charger,
+                  }),
+              },
+            ]}
             rightActions={
               chargers.length > 1
                 ? [

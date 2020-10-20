@@ -3,6 +3,7 @@ import { Animated, StyleSheet, Text } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 
 interface PropTypes {
+  direction: "LEFT" | "RIGHT";
   text: string;
   color: string;
   onPress: () => void | Promise<void>;
@@ -11,6 +12,7 @@ interface PropTypes {
 }
 
 const SwipeableAction: React.FC<PropTypes> = ({
+  direction,
   text,
   color,
   x,
@@ -19,13 +21,13 @@ const SwipeableAction: React.FC<PropTypes> = ({
 }) => {
   const trans = progress.interpolate({
     inputRange: [0, 1],
-    outputRange: [x, 0],
+    outputRange: [direction === "LEFT" ? -x : x, 0],
   });
 
   return (
     <Animated.View style={{ flex: 1, transform: [{ translateX: trans }] }}>
       <RectButton
-        style={[styles.rightAction, { backgroundColor: color }]}
+        style={[styles.action, { backgroundColor: color }]}
         onPress={onPress}
       >
         <Text style={styles.actionText}>{text}</Text>
@@ -35,15 +37,10 @@ const SwipeableAction: React.FC<PropTypes> = ({
 };
 
 const styles = StyleSheet.create({
-  leftAction: {
+  action: {
     flex: 1,
-    backgroundColor: "#497AFC",
     justifyContent: "center",
-  },
-  rightAction: {
     alignItems: "center",
-    flex: 1,
-    justifyContent: "center",
   },
   actionText: {
     color: "white",

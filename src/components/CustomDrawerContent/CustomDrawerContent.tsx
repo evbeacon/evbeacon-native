@@ -21,14 +21,14 @@ const CustomDrawerContent: React.FC<PropTypes> = ({
   newState.routes = newState.routes.filter(
     (item) => !hiddenRoutes.includes(item.name)
   );
+  const clonedProps = { ...rest, state: newState };
 
   return (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView {...clonedProps}>
       <DrawerItemList
-        state={newState}
         itemStyle={[itemStyle, styles.item]}
         labelStyle={[labelStyle, styles.label]}
-        {...rest}
+        {...clonedProps}
       />
     </DrawerContentScrollView>
   );
@@ -36,10 +36,7 @@ const CustomDrawerContent: React.FC<PropTypes> = ({
 
 const styles = StyleSheet.create({
   item: {
-    // flex: 1,
-    // padding: 24,
     backgroundColor: "#eaeaea",
-    // alignItems: "center",
     fontSize: 20,
   },
   label: {

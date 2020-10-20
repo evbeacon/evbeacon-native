@@ -122,142 +122,141 @@ const AddChargerScreen: React.FC<PropTypes> = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAwareScrollView
-      style={styles.root}
-      contentContainerStyle={styles.container}
-    >
-      <FormInput
-        label="Street"
-        containerStyle={styles.spacer}
-        textContentType="fullStreetAddress"
-        onChangeText={(text) =>
-          setAddress((prevState) => ({
-            ...prevState,
-            street: text,
-          }))
-        }
-        value={address.street}
-      />
-      <FormInput
-        label="City"
-        containerStyle={styles.spacer}
-        textContentType="addressCity"
-        onChangeText={(text) =>
-          setAddress((prevState) => ({
-            ...prevState,
-            city: text,
-          }))
-        }
-        value={address.city}
-      />
-      <FormInput
-        label="State"
-        containerStyle={styles.spacer}
-        textContentType="addressState"
-        onChangeText={(text) =>
-          setAddress((prevState) => ({
-            ...prevState,
-            state: text,
-          }))
-        }
-        value={address.state}
-      />
-      <FormInput
-        label="Zip Code"
-        containerStyle={styles.spacer}
-        onChangeText={(text) =>
-          setAddress((prevState) => ({
-            ...prevState,
-            zipCode: text,
-          }))
-        }
-        value={address.zipCode}
-      />
-      <Picker
-        label="Country"
-        selectedValue={address.country}
-        style={[styles.pickerTextContainer, styles.spacer]}
-        pickerStyle={styles.picker}
-        onValueChange={(itemValue) =>
-          setAddress((prevState) => ({
-            ...prevState,
-            country: itemValue.toString(),
-          }))
-        }
-      >
-        {locations.countries.map((item) => (
-          <Picker.Item key={item} label={item} value={item} />
-        ))}
-      </Picker>
-      <Picker
-        label="Plug Type"
-        selectedValue={plugType}
-        style={[styles.pickerTextContainer, styles.spacer]}
-        pickerStyle={styles.picker}
-        onValueChange={(itemValue) => setPlugType(itemValue.toString())}
-      >
-        {cars.plugTypes.map((item) => (
-          <Picker.Item key={item} label={item} value={item} />
-        ))}
-      </Picker>
-      <FormInput
-        label="Description (optional)"
-        containerStyle={styles.spacer}
-        style={styles.multiline}
-        multiline
-        onChangeText={(text) => setDescription(text)}
-        value={description}
-      />
-      <View style={[styles.checkboxContainer, styles.spacer]}>
-        <Checkbox
-          checked={hasOffHours}
-          onPress={() => setHasOffHours((prevState) => !prevState)}
-          style={styles.checkboxSpacer}
+    <KeyboardAwareScrollView style={styles.root}>
+      <View style={styles.container}>
+        <FormInput
+          label="Street"
+          containerStyle={styles.spacer}
+          textContentType="fullStreetAddress"
+          onChangeText={(text) =>
+            setAddress((prevState) => ({
+              ...prevState,
+              street: text,
+            }))
+          }
+          value={address.street}
         />
-        <Text style={styles.actionText}>Off Hours</Text>
+        <FormInput
+          label="City"
+          containerStyle={styles.spacer}
+          textContentType="addressCity"
+          onChangeText={(text) =>
+            setAddress((prevState) => ({
+              ...prevState,
+              city: text,
+            }))
+          }
+          value={address.city}
+        />
+        <FormInput
+          label="State"
+          containerStyle={styles.spacer}
+          textContentType="addressState"
+          onChangeText={(text) =>
+            setAddress((prevState) => ({
+              ...prevState,
+              state: text,
+            }))
+          }
+          value={address.state}
+        />
+        <FormInput
+          label="Zip Code"
+          containerStyle={styles.spacer}
+          onChangeText={(text) =>
+            setAddress((prevState) => ({
+              ...prevState,
+              zipCode: text,
+            }))
+          }
+          value={address.zipCode}
+        />
+        <Picker
+          label="Country"
+          selectedValue={address.country}
+          style={[styles.pickerTextContainer, styles.spacer]}
+          pickerStyle={styles.picker}
+          onValueChange={(itemValue) =>
+            setAddress((prevState) => ({
+              ...prevState,
+              country: itemValue.toString(),
+            }))
+          }
+        >
+          {locations.countries.map((item) => (
+            <Picker.Item key={item} label={item} value={item} />
+          ))}
+        </Picker>
+        <Picker
+          label="Plug Type"
+          selectedValue={plugType}
+          style={[styles.pickerTextContainer, styles.spacer]}
+          pickerStyle={styles.picker}
+          onValueChange={(itemValue) => setPlugType(itemValue.toString())}
+        >
+          {cars.plugTypes.map((item) => (
+            <Picker.Item key={item} label={item} value={item} />
+          ))}
+        </Picker>
+        <FormInput
+          label="Description (optional)"
+          containerStyle={styles.spacer}
+          style={styles.multiline}
+          multiline
+          onChangeText={(text) => setDescription(text)}
+          value={description}
+        />
+        <View style={[styles.checkboxContainer, styles.spacer]}>
+          <Checkbox
+            checked={hasOffHours}
+            onPress={() => setHasOffHours((prevState) => !prevState)}
+            style={styles.checkboxSpacer}
+          />
+          <Text style={styles.actionText}>Off Hours</Text>
+        </View>
+        {hasOffHours && (
+          <>
+            <DateTimePicker
+              label="Start"
+              value={offHoursStart}
+              mode="time"
+              is24Hour={false}
+              style={[styles.pickerTextContainer, styles.spacer]}
+              onConfirm={(selectedDate) => {
+                const parsedDate = dayjs(selectedDate);
+                const newDate = parsedDate.subtract(
+                  parsedDate.minute(),
+                  "minute"
+                );
+
+                setOffHoursStart(newDate.toDate());
+              }}
+            />
+            <DateTimePicker
+              label="End"
+              value={offHoursEnd}
+              mode="time"
+              is24Hour={false}
+              style={[styles.pickerTextContainer, styles.spacer]}
+              onConfirm={(selectedDate) => {
+                const parsedDate = dayjs(selectedDate);
+                const newDate = parsedDate.subtract(
+                  parsedDate.minute(),
+                  "minute"
+                );
+
+                setOffHoursEnd(newDate.toDate());
+              }}
+            />
+          </>
+        )}
+        <TouchableHighlight
+          style={[styles.button, styles.spacer]}
+          onPress={handleCreate}
+        >
+          <Text style={[styles.actionText, styles.buttonText]}>Create</Text>
+        </TouchableHighlight>
       </View>
-      {hasOffHours && (
-        <>
-          <DateTimePicker
-            label="Start"
-            value={offHoursStart}
-            mode="time"
-            is24Hour={false}
-            style={[styles.pickerTextContainer, styles.spacer]}
-            onConfirm={(selectedDate) => {
-              const parsedDate = dayjs(selectedDate);
-              const newDate = parsedDate.subtract(
-                parsedDate.minute(),
-                "minute"
-              );
-
-              setOffHoursStart(newDate.toDate());
-            }}
-          />
-          <DateTimePicker
-            label="End"
-            value={offHoursEnd}
-            mode="time"
-            is24Hour={false}
-            style={[styles.pickerTextContainer, styles.spacer]}
-            onConfirm={(selectedDate) => {
-              const parsedDate = dayjs(selectedDate);
-              const newDate = parsedDate.subtract(
-                parsedDate.minute(),
-                "minute"
-              );
-
-              setOffHoursEnd(newDate.toDate());
-            }}
-          />
-        </>
-      )}
-      <TouchableHighlight
-        style={[styles.button, styles.spacer]}
-        onPress={handleCreate}
-      >
-        <Text style={[styles.actionText, styles.buttonText]}>Create</Text>
-      </TouchableHighlight>
     </KeyboardAwareScrollView>
   );
 };

@@ -7,3 +7,5 @@ export type ChargerState = {
 };
 
 export type SetChargersAction = ChargerState["chargers"];
+export type UpdateChargerAction = ChargerType;
+export type DeleteChargerAction = ChargerType;

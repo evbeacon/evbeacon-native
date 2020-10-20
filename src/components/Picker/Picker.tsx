@@ -29,6 +29,7 @@ const Picker: IPicker<PropTypes> = ({
   label,
   style,
   pickerStyle,
+  enabled = true,
   ...pickerProps
 }: PropTypes) => {
   const [open, setOpen] = React.useState<boolean>(false);
@@ -36,43 +37,56 @@ const Picker: IPicker<PropTypes> = ({
   return (
     <>
       <TouchableWithoutFeedback onPress={() => setOpen(true)}>
-        <View style={[styles.primaryContainer, style]}>
+        <View
+          style={[
+            styles.primaryContainer,
+            !enabled && styles.disabledContainer,
+            style,
+          ]}
+        >
           <Text style={styles.text}>{label}:</Text>
           <Text style={styles.text}>{pickerProps.selectedValue}</Text>
         </View>
       </TouchableWithoutFeedback>
-      <FadeView
-        visible={open}
-        duration={250}
-        maxOpacity={0.6}
-        style={styles.modalBackground}
-        pointerEvents="none"
-      />
-      <Modal
-        style={styles.modal}
-        animationType="slide"
-        visible={open}
-        transparent
-      >
-        <TouchableWithoutFeedback onPress={() => setOpen(false)}>
-          <View style={styles.modalWrapper}>
-            <TouchableWithoutFeedback>
-              <View style={styles.modalContainer}>
-                <BasePicker
-                  mode="dropdown"
-                  style={[pickerStyle, styles.spacer]}
-                  {...pickerProps}
-                />
-                <TouchableWithoutFeedback onPress={() => setOpen(false)}>
-                  <View style={styles.button}>
-                    <Text style={[styles.text, styles.buttonText]}>Select</Text>
+      {enabled && (
+        <>
+          <FadeView
+            visible={open}
+            duration={250}
+            maxOpacity={0.6}
+            style={styles.modalBackground}
+            pointerEvents="none"
+          />
+          <Modal
+            style={styles.modal}
+            animationType="slide"
+            visible={open}
+            transparent
+          >
+            <TouchableWithoutFeedback onPress={() => setOpen(false)}>
+              <View style={styles.modalWrapper}>
+                <TouchableWithoutFeedback>
+                  <View style={styles.modalContainer}>
+                    <BasePicker
+                      mode="dropdown"
+                      style={[pickerStyle, styles.spacer]}
+                      enabled={enabled}
+                      {...pickerProps}
+                    />
+                    <TouchableWithoutFeedback onPress={() => setOpen(false)}>
+                      <View style={styles.button}>
+                        <Text style={[styles.text, styles.buttonText]}>
+                          Select
+                        </Text>
+                      </View>
+                    </TouchableWithoutFeedback>
                   </View>
                 </TouchableWithoutFeedback>
               </View>
             </TouchableWithoutFeedback>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
+          </Modal>
+        </>
+      )}
     </>
   );
 };
@@ -90,6 +104,10 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 4,
     fontSize: 20,
+    backgroundColor: "#ffffff",
+  },
+  disabledContainer: {
+    backgroundColor: "#cccccc",
   },
   modal: {
     flex: 1,
